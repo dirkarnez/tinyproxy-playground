@@ -1,0 +1,82 @@
+name: tinyproxy
+on: 
+  workflow_dispatch:
+  
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      INPUT_INCLUDE-HIDDEN-FILES: true
+      INPUT_NAME: files
+      INPUT_OVERWRITE: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - run: docker run --rm -d -p 8888:8888 vimagick/tinyproxy
+      
+      - run: |
+          curl https://aka.ms/TunnelsCliDownload/linux-x64 -L -J --output devtunnel
+
+
+      # - run: |
+      #     curl https://github.com/dirkarnez/staticserver/releases/download/v2.0.0/staticserver-v2.0.0-windows-latest.zip -L -J --output staticserver.zip &&^
+      #     7z.exe x staticserver.zip &&^
+      #     dir
+
+      
+          
+      - run: |
+          devtunnel user login -g -d
+
+      - run: |
+          devtunnel host -p 8888 --allow-anonymous --protocol https
+        
+          
+      # - uses: actions/setup-node@v4
+      #   with:
+      #     node-version: '18'
+          
+      # - run: |
+      #     npm i -g concurrently
+      
+      # - run: |
+      #     concurrently "devtunnel host -p 3000 --allow-anonymous --protocol https" "staticserver.exe --port=3000 --mode=spa"
+          
+          
+    # - run: |
+    #     echo $PATH && \
+    #     cd /usr/local/bin && \
+    #     sudo curl https://github.com/dirkarnez/transfersh/releases/download/v1.0.0/transfersh-v1.0.0-ubuntu-latest.zip -L -O -J && \
+    #     sudo unzip transfersh-v1.0.0-ubuntu-latest.zip && \
+    #     sudo ls -R
+
+    # - run: |
+    #     cd /usr/local/bin && \
+    #     sudo curl https://github.com/timvisee/ffsend/releases/download/v0.2.76/ffsend-v0.2.76-linux-x64-static -L --output ffsend && \
+    #     sudo chmod +x /usr/local/bin/ffsend  && \
+    #     sudo ls -R
+
+
+    # - run: sudo chmod -R +x ./
+    # - uses: actions/checkout@v4
+    #   with:
+    #     repository: actions/upload-artifact
+    #     ref: v4.5.0
+    #     path: upload-artifact
+    #     submodules: true
+
+    # - working-directory: upload-artifact
+    #   run: npm i
+        
+    # - uses: fastai/workflows/ssh@master
+    #   with:
+    #     ssh_key: ${{ secrets.SSH_KEY }}
+    #     key_file: id_ecdsa
+#     - uses: actions/checkout@v2
+#     - run: source script-linux.sh
+    # - name: Setup tmate session
+    #   uses: mxschmitt/action-tmate@master
