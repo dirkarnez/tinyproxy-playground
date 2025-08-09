@@ -23,29 +23,23 @@ jobs:
           sudo chmod +x ./devtunnel
 
 
-      # - run: |
-      #     curl https://github.com/dirkarnez/staticserver/releases/download/v2.0.0/staticserver-v2.0.0-windows-latest.zip -L -J --output staticserver.zip &&^
-      #     7z.exe x staticserver.zip &&^
-      #     dir
+      - run: |
+          curl https://github.com/dirkarnez/staticserver/releases/download/v2.0.0/staticserver-v2.0.0-ubuntu-latest.zip -L -J --output staticserver.zip && \
+          7z x staticserver.zip && \
+          ls
 
-      
-          
       - run: |
           ./devtunnel user login -g -d
-
+          
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          
       - run: |
-          ./devtunnel host -p 8888 --allow-anonymous --protocol https
-        
-          
-      # - uses: actions/setup-node@v4
-      #   with:
-      #     node-version: '18'
-          
-      # - run: |
-      #     npm i -g concurrently
+          npm i -g concurrently
       
-      # - run: |
-      #     concurrently "devtunnel host -p 3000 --allow-anonymous --protocol https" "staticserver.exe --port=3000 --mode=spa"
+      - run: |
+          concurrently "./devtunnel host -p 8888 3000 --allow-anonymous --protocol https" "./staticserver --port=3000 --mode=spa"
           
           
     # - run: |
