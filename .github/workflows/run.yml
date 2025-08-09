@@ -19,7 +19,8 @@ jobs:
       - run: docker run --rm -d -p 8888:8888 vimagick/tinyproxy
       
       - run: |
-          curl https://aka.ms/TunnelsCliDownload/linux-x64 -L -J --output devtunnel
+          curl https://aka.ms/TunnelsCliDownload/linux-x64 -L -J --output devtunnel && \
+          sudo chmod +x ./devtunnel
 
 
       # - run: |
