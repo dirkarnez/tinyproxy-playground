@@ -11,6 +11,7 @@ Working
     - https://aka.ms/TunnelsCliDownload/linux-x64
 3. `.\devtunnel user login -g -d`
 4. `.\devtunnel connect ${the id}`
-5. Windows' system proxy setting -> "Manual proxy setup": 127.0.0.1:8888
+5. CURL test: `curl https://api.ipify.org --proxy 127.0.0.1:8888`
+6. Windows' system proxy setting -> "Manual proxy setup": `127.0.0.1:8888`
     - local .\devtunnel.exe **is** the server
     - ![](./proxy.jpg)
