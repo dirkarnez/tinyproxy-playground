@@ -31,16 +31,19 @@ jobs:
       - run: |
           ./devtunnel host --help && \
           ./devtunnel user login -g -d
-          
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-          
+
       - run: |
-          npm i -g concurrently
+          ./devtunnel host -p 8888 --verbose --allow-anonymous --protocol https
           
-      - run: |
-          concurrently  './staticserver --port=3000 --mode=spa' './devtunnel host MY_TUNNEL -p 8888 3000 --verbose --allow-anonymous --protocol https'
+      # - uses: actions/setup-node@v4
+      #   with:
+      #     node-version: '18'
+          
+      # - run: |
+      #     npm i -g concurrently
+          
+      # - run: |
+      #     concurrently  './staticserver --port=3000 --mode=spa' './devtunnel host MY_TUNNEL -p 8888 3000 --verbose --allow-anonymous --protocol https'
           
 
     # - run: |
